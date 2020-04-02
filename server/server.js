@@ -1,19 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const pg = require('pg');
 
 const app = express();
-const Pool = pg.Pool;
 const PORT = process.env.PORT || 5000;
-
-// Configuring the pool connection from the server to the database
-const pool = new Pool({
-  database: 'music_storage', // the name of database, !! This Can Change !!
-  host: 'localhost', // where is your database? (on my machine)
-  port: 5432, // the port for the database, 5432 is default for postgres
-  max: 10, // how many connections (queries) at one time
-  idleTimeoutMills: 30000, // 30 seconds to try to connect, otherwise  cancel query
-});
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
