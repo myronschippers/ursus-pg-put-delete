@@ -19,6 +19,8 @@ function init() {
 function clickUpdate(event) {
   const itemId = event.target.dataset.id;
   console.log('itemId:', itemId);
+
+  updateSong(itemId);
 }
 
 function clickDelete(event) {
@@ -64,6 +66,25 @@ function deleteSong(id) {
   .catch((err) => {
     console.log('ERROR', err);
     alert('There was an error deleting your song.');
+  });
+}
+
+function updateSong(id, songData) {
+  console.log('UPDATE:', id);
+  console.log('update to: ', songData);
+
+  $.ajax({
+    method: 'PUT',
+    url: `/songs/${id}`,
+    data: songData
+  })
+  .then((response) => {
+    console.log('UPDATED', response);
+    getSongs();
+  })
+  .catch((err) => {
+    console.log('ERROR:', err);
+    alert('There was an error updating your song.');
   });
 }
 

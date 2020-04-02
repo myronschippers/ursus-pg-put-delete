@@ -56,3 +56,7 @@ th, td {
 .btn:hover {
   background-color: rgb(75, 64, 145);
 }
+
+.hide {
+  display: none;
+}
