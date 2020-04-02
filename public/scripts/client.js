@@ -4,11 +4,24 @@ $(document).ready(init);
 function init() {
   console.log('DOM is ready!!!');
 
-  // do stuff
+  // hook up event listeners
+  $('.js-songs').on('click', '.js-delete', clickDelete);
 
   // load songs to page
   getSongs();
 }
+
+//
+// EVENT HANDLERS
+// ----------
+
+function clickDelete(event) {
+  console.log(this);
+}
+
+//
+// SERVER API CALLS
+// ----------
 
 function getSongs() {
   $.ajax({
@@ -24,6 +37,10 @@ function getSongs() {
   });
 }
 
+//
+// DOM Updates
+// ----------
+
 function render(songsList) {
   console.log(songsList);
 
@@ -37,6 +54,7 @@ function render(songsList) {
         <td>${songItem.track}</td>
         <td>${songItem.artist}</td>
         <td>${new Date(songItem.published).getFullYear()}</td>
+        <td><button class="js-delete">DELETE</button></td>
       </tr>
     `);
   }
