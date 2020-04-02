@@ -23,6 +23,7 @@ function clickDelete(event) {
 // SERVER API CALLS
 // ----------
 
+// get all of the songs from the server
 function getSongs() {
   $.ajax({
     method: 'GET',
@@ -54,7 +55,7 @@ function render(songsList) {
         <td>${songItem.track}</td>
         <td>${songItem.artist}</td>
         <td>${new Date(songItem.published).getFullYear()}</td>
-        <td><button class="js-delete">DELETE</button></td>
+        <td><button class="js-delete btn">DELETE</button></td>
       </tr>
     `);
   }
