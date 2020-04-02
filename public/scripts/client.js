@@ -1,12 +1,15 @@
 console.log('Hello World');
 $(document).ready(init);
 
+let itemUpdateId = 0;
+
 function init() {
   console.log('DOM is ready!!!');
 
   // hook up event listeners
   $('.js-songs').on('click', '.js-delete', clickDelete);
   $('.js-songs').on('click', '.js-update', clickUpdate);
+  $('.js-btn-save').on('click', clickSaveUpdate);
 
   // load songs to page
   getSongs();
@@ -16,11 +19,38 @@ function init() {
 // EVENT HANDLERS
 // ----------
 
-function clickUpdate(event) {
-  const itemId = event.target.dataset.id;
-  console.log('itemId:', itemId);
+function clickSaveUpdate(event) {
+  console.log('SAVE UPDATE');
 
-  updateSong(itemId);
+  // updateSong(itemId, newSongData);
+}
+
+function clickUpdate(event) {
+  itemUpdateId = event.target.dataset.id;
+  console.log('itemUpdateId:', itemUpdateId);
+  const $songRowElement = $(this)
+    .parent() // to <td>
+    .parent(); // to <tr>
+  const currentRank = $songRowElement
+    .children('.js-song-rank') // <td> for rank
+    .text();
+  const currentTrack = $songRowElement
+    .children('.js-song-track') // <td> for rank
+    .text();
+  const currentArtist = $songRowElement
+    .children('.js-song-artist') // <td> for rank
+    .text();
+  const currentPublished = $songRowElement
+    .children('.js-song-published') // <td> for rank
+    .text();
+
+  $('.js-input-rank').val(parseInt(currentRank));
+  $('.js-input-track').val(currentTrack);
+  $('.js-input-artist').val(currentArtist);
+  $('.js-input-published').val(currentPublished);
+
+  // making the form visible
+  $('.js-update-form').toggleClass('hide');
 }
 
 function clickDelete(event) {
@@ -101,10 +131,18 @@ function render(songsList) {
     // moment.js for date formatting
     $('.js-songs').append(`
       <tr>
-        <td>${songItem.rank}</td>
-        <td>${songItem.track}</td>
-        <td>${songItem.artist}</td>
-        <td>${new Date(songItem.published).getFullYear()}</td>
+        <td class="js-song-rank">
+          ${songItem.rank}
+        </td>
+        <td class="js-song-track">
+          ${songItem.track}
+        </td>
+        <td class="js-song-artist">
+          ${songItem.artist}
+        </td>
+        <td class="js-song-published">
+          ${new Date(songItem.published).getFullYear()}
+        </td>
         <td>
           <button class="js-delete btn" data-id="${songItem.id}">DELETE</button>
           <button class="js-update btn" data-id="${songItem.id}">UPDATE</button>
