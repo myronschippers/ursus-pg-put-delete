@@ -17,6 +17,14 @@ function init() {
 
 function clickDelete(event) {
   console.log(this);
+  // Getting id from element with jquery
+  // const itemId = $(this).data('id');
+
+  // Getting id from element with javascript
+  const itemId = event.target.dataset.id;
+  console.log('itemId:', itemId);
+
+  deleteSong(itemId);
 }
 
 //
@@ -38,6 +46,21 @@ function getSongs() {
   });
 }
 
+function deleteSong(id) {
+  $.ajax({
+    method:'DELETE',
+    url: `/songs/${id}`
+  })
+  .then((response) => {
+    console.log('DELETE', response);
+    getSongs();
+  })
+  .catch((err) => {
+    console.log('ERROR', err);
+    alert('There was an error deleting your song.');
+  });
+}
+
 //
 // DOM Updates
 // ----------
@@ -55,7 +78,7 @@ function render(songsList) {
         <td>${songItem.track}</td>
         <td>${songItem.artist}</td>
         <td>${new Date(songItem.published).getFullYear()}</td>
-        <td><button class="js-delete btn">DELETE</button></td>
+        <td><button class="js-delete btn" data-id="${songItem.id}">DELETE</button></td>
       </tr>
     `);
   }
