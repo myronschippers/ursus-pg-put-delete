@@ -33,16 +33,16 @@ function clickUpdate(event) {
     .parent(); // to <tr>
   const currentRank = $songRowElement
     .children('.js-song-rank') // <td> for rank
-    .text();
+    .text().trim();
   const currentTrack = $songRowElement
     .children('.js-song-track') // <td> for rank
-    .text();
+    .text().trim();
   const currentArtist = $songRowElement
     .children('.js-song-artist') // <td> for rank
-    .text();
+    .text().trim();
   const currentPublished = $songRowElement
     .children('.js-song-published') // <td> for rank
-    .text();
+    .text().trim();
 
   $('.js-input-rank').val(parseInt(currentRank));
   $('.js-input-track').val(currentTrack);
