@@ -71,4 +71,20 @@ router.put('/:id', (req, res) => {
   });
 });
 
+router.delete('/:id', (req, res) => {
+  const itemId = req.params.id;
+  const queryText = `DELETE FROM "songs" WHERE "id" = $1;`;
+
+  pool.query(queryText, [
+    itemId
+  ])
+  .then((responseDb) => {
+    res.sendStatus(200);
+  })
+  .catch((err) => {
+    console.log('Error deleting song:', err);
+    res.sendStatus(500);
+  });
+});
+
 module.exports = router;
