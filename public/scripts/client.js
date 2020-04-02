@@ -22,7 +22,15 @@ function init() {
 function clickSaveUpdate(event) {
   console.log('SAVE UPDATE');
 
-  // updateSong(itemId, newSongData);
+  const newSongData = {
+    rank: $('.js-input-rank').val(),
+    track: $('.js-input-track').val(),
+    artist: $('.js-input-artist').val(),
+    published: $('.js-input-published').val(),
+  };
+
+  updateSong(itemUpdateId, newSongData);
+
 }
 
 function clickUpdate(event) {
@@ -42,15 +50,17 @@ function clickUpdate(event) {
     .text().trim();
   const currentPublished = $songRowElement
     .children('.js-song-published') // <td> for rank
-    .text().trim();
+    .data('date');
 
+  // take the current song data and make it the value for the form
   $('.js-input-rank').val(parseInt(currentRank));
   $('.js-input-track').val(currentTrack);
   $('.js-input-artist').val(currentArtist);
   $('.js-input-published').val(currentPublished);
 
   // making the form visible
-  $('.js-update-form').toggleClass('hide');
+  $('.js-update-form').removeClass('hide');
+  $('.js-input-rank').focus();
 }
 
 function clickDelete(event) {
@@ -110,6 +120,7 @@ function updateSong(id, songData) {
   })
   .then((response) => {
     console.log('UPDATED', response);
+    $('.js-update-form').addClass('hide');
     getSongs();
   })
   .catch((err) => {
@@ -140,7 +151,7 @@ function render(songsList) {
         <td class="js-song-artist">
           ${songItem.artist}
         </td>
-        <td class="js-song-published">
+        <td class="js-song-published" data-date="${songItem.published}">
           ${new Date(songItem.published).getFullYear()}
         </td>
         <td>

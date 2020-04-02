@@ -4,7 +4,7 @@ const pool = require('../modules/pool');
 
 // GET ROUTE for All Songs
 router.get('/', (req, res) => {
-  const queryText = `SELECT * FROM "songs";`;
+  const queryText = `SELECT * FROM "songs" ORDER BY "artist" DESC;`;
   pool.query(queryText)
     .then((responseDB) => {
       const dbRows = responseDB.rows;
