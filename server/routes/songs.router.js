@@ -47,4 +47,28 @@ router.post('/', (req, res) => {
     });
 });
 
+// create a route for updating song data
+router.put('/:id', (req, res) => {
+  const itemId = req.params.id;
+  const newSongData = req.body;
+  const queryText = `UPDATE "songs"
+    SET "artist"=$1, "rank"=$2, "track"=$3, "published"=$4
+    WHERE "id" = $5;`;
+
+  pool.query(queryText, [
+    newSongData.artist,
+    newSongData.rank,
+    newSongData.track,
+    newSongData.published,
+    itemId,
+  ])
+  .then((responseDb) => {
+    res.sendStatus(200);
+  })
+  .catch((err) => {
+    console.log('Error updating song:', err);
+    res.sendStatus(500);
+  });
+});
+
 module.exports = router;
