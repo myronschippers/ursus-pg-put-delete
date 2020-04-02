@@ -6,6 +6,7 @@ function init() {
 
   // hook up event listeners
   $('.js-songs').on('click', '.js-delete', clickDelete);
+  $('.js-songs').on('click', '.js-update', clickUpdate);
 
   // load songs to page
   getSongs();
@@ -14,6 +15,11 @@ function init() {
 //
 // EVENT HANDLERS
 // ----------
+
+function clickUpdate(event) {
+  const itemId = event.target.dataset.id;
+  console.log('itemId:', itemId);
+}
 
 function clickDelete(event) {
   console.log(this);
@@ -78,7 +84,10 @@ function render(songsList) {
         <td>${songItem.track}</td>
         <td>${songItem.artist}</td>
         <td>${new Date(songItem.published).getFullYear()}</td>
-        <td><button class="js-delete btn" data-id="${songItem.id}">DELETE</button></td>
+        <td>
+          <button class="js-delete btn" data-id="${songItem.id}">DELETE</button>
+          <button class="js-update btn" data-id="${songItem.id}">UPDATE</button>
+        </td>
       </tr>
     `);
   }
